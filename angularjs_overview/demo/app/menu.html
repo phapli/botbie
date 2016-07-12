@@ -62,7 +62,7 @@
                             <div class="media-body">
                                 <h2 class="media-heading">{{dish.name}}
                                     <span class="label label-danger">{{dish.label}}</span>
-                                    <span class="badge">{{dish.price | currency}}</span></h2>
+                                    <span class="badge">{{discount(dish.price) | currency}}</span></h2>
                                 <p>{{dish.description}}</p>
                                 <p>Comment: {{dish.comment}}</p>
                             </div>
@@ -78,12 +78,22 @@
     <script>
 
         var app = angular.module('confusionApp',[]);
-        app.controller('menuController', ['$scope', '$http', function($scope, $http) {
+        app.service('PriceService', function(){
+            this.discount = function(a) {
+                return a * 0.9;
+            }
+        });
+        app.controller('menuController', ['$scope', '$http', 'PriceService', function($scope, $http, $priceService) {
             var url = "data.txt";
 
             $http.get(url).success( function(response) {
                 $scope.dishes = response;
             });
+
+            $scope.discount = function(price) {
+                return $priceService.discount(price);
+            }
+
             $scope.tab = 0;
             $scope.isSelected = function (checkTab) {
                 return ($scope.tab === checkTab);
