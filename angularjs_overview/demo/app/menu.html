@@ -51,6 +51,9 @@
                             <span class="label label-danger">{{dish.label}}</span>
                             <span class="badge">{{dish.price | currency}}</span></h2>
                         <p>{{dish.description}}</p>
+                        <p>Comment: {{dish.comment}}</p>
+                        <p>Type your comment:
+                            <input type="text" ng-model="dish.comment"></p>
                     </div>
                 </div>
             </div>
